@@ -344,7 +344,10 @@ public class RobotBaseUMKC implements AstroRobotBaseInterface {
         int driftChange = current - initial;
         float driftRate = driftChange/15f; //degrees per second
         callingOpMode.telemetry.addData("Drift Rate", driftRate);
+        gyro.resetZAxisIntegrator();
+        callingOpMode.telemetry.addData("gyro", "Calibrated");
 
+        /*
         if (driftRate < 0.0333){
             gyro.resetZAxisIntegrator();
             callingOpMode.telemetry.addData("gyro", "Calibrated");
@@ -352,6 +355,7 @@ public class RobotBaseUMKC implements AstroRobotBaseInterface {
         else{
             calibrateGyro();
         }
+        */
     }
 
     public void setGrabberUp() {

@@ -60,7 +60,7 @@ public class BluePos1 extends LinearOpMode {
         robotBase.initializeServos();
         robotBase.calibrateGyro();
         robotBase.cameraSetup();
-        telemetry.addData("Ready to run:", "Gyro is calabrated. You are ready to run. " +
+        telemetry.addData("Ready to run:", "Gyro is calibrated. You are ready to run. " +
                 "Make sure that the robot is centered on the tile furthest to the left on the blue side.");
 
         waitForStart();
