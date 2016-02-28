@@ -55,7 +55,7 @@ public class BluePos2 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        robotBase = new RobotBaseUMKC(hardwareMap, this);
+        robotBase = new RobotBaseState(hardwareMap, this);
         //robotBase.setDriveReverse();
         robotBase.initializeServos();
         robotBase.calibrateGyro();
@@ -63,6 +63,8 @@ public class BluePos2 extends LinearOpMode {
                 "Make sure that the robot is centered on the tile furthest to the left on the blue side.");
 
         waitForStart();
+
+        robotBase.gyroResetZaxisIntegrator();
 
         robotBase.driveStraight(kDriveOut, 1, 0, 1.0f); //clears wall
         robotBase.turn(35, 1.0f); //turns 45 degrees

@@ -74,6 +74,8 @@ public class RobotBaseState implements AstroRobotBaseInterface {
     //camera processing
     int yRedAvg = 0;
     int yBlueAvg = 0;
+    int totalBlue = 0;
+    int totalRed = 0;
     boolean cameraProcessDone = false;
 
     //time catch
@@ -234,10 +236,8 @@ public class RobotBaseState implements AstroRobotBaseInterface {
                 System.out.println("Green: " + Color.green(clr));
                 */
 
-                int totalRed = 0;
                 int yRedSum = 0;
 
-                int totalBlue = 0;
                 int yBlueSum = 0;
 
                 int currentPixel = 0;
@@ -319,6 +319,16 @@ public class RobotBaseState implements AstroRobotBaseInterface {
     }
 
     @Override
+    public int get_BlueTotal(){
+        return totalBlue;
+    }
+
+    @Override
+    public int get_RedTotal(){
+        return totalRed;
+    }
+
+    @Override
     public Boolean get_cameraProcessDone(){
         return cameraProcessDone;
     }
@@ -352,6 +362,12 @@ public class RobotBaseState implements AstroRobotBaseInterface {
         else{
             calibrateGyro();
         }
+    }
+
+    @Override
+    public void gyroResetZaxisIntegrator() throws InterruptedException{
+        gyro.resetZAxisIntegrator();
+        Thread.sleep(100);
     }
 
     public void setGrabberUp() {
@@ -587,7 +603,13 @@ public class RobotBaseState implements AstroRobotBaseInterface {
         motorRight.setPower(0);
         motorLeft.setPower(0);
         System.out.println("final driveTIme: " + driveTime);
-        Thread.sleep(100);
+        callingOpMode.waitForNextHardwareCycle();
+        motorRight.setPower(0);
+        motorLeft.setPower(0);
+        callingOpMode.waitForNextHardwareCycle();
+        motorRight.setPower(0);
+        motorLeft.setPower(0);
+        callingOpMode.waitForNextHardwareCycle();
     }
 
     @Override

@@ -56,7 +56,7 @@ public class BluePos1Wait extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        robotBase = new RobotBaseUMKC(hardwareMap, this);
+        robotBase = new RobotBaseState(hardwareMap, this);
         robotBase.initializeServos();
         robotBase.calibrateGyro();
         robotBase.cameraSetup();
@@ -66,6 +66,8 @@ public class BluePos1Wait extends LinearOpMode {
         waitForStart();
 
         sleep(15000);
+
+        robotBase.gyroResetZaxisIntegrator();
 
         robotBase.driveStraight(kClearWall, 1, 0, 1.0f); //clears wall
         robotBase.turn(40, 1.0f); //turns 45 degrees

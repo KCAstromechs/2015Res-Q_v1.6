@@ -24,11 +24,17 @@ public interface AstroRobotBaseInterface {
 
     int get_yBlueAvg();
 
+    int get_BlueTotal();
+
+    int get_RedTotal();
+
     Boolean get_cameraProcessDone();
 
     void calibrateGyro()throws InterruptedException;
 
     void gyroDriftCatch() throws InterruptedException;
+
+    void gyroResetZaxisIntegrator() throws InterruptedException;
 
     void setGrabberUp();
 
