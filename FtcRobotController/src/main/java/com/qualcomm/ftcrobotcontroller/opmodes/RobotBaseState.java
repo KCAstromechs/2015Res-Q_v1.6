@@ -42,8 +42,8 @@ public class RobotBaseState implements AstroRobotBaseInterface {
     public DcMotor encoderMotor;
 
     //LED control
-    public DcMotor redLED;
-    public DcMotor blueLED;
+    //public DcMotor redLED;
+    //public DcMotor blueLED;
 
     //Servos
     Servo mjolnir;
@@ -106,7 +106,7 @@ public class RobotBaseState implements AstroRobotBaseInterface {
 
         //color controls
         //redLED = hardwareMap.dcMotor.get("red");
-       // blueLED = hardwareMap.dcMotor.get("blue");
+        //blueLED = hardwareMap.dcMotor.get("blue");
 
         //Servo init
         leftHook=hardwareMap.servo.get("leftHook");
@@ -118,6 +118,17 @@ public class RobotBaseState implements AstroRobotBaseInterface {
 
         //sensor init
         gyro=hardwareMap.gyroSensor.get("gyro");
+    }
+
+    @Override
+    public void setColorRed(){
+        //redLED.setPower(1);
+        //blueLED.setPower(0);
+    }
+    @Override
+    public void setColorBlue(){
+        //redLED.setPower(0);
+        //blueLED.setPower(1);
     }
 
     @Override
@@ -372,7 +383,7 @@ public class RobotBaseState implements AstroRobotBaseInterface {
 
     public void setGrabberUp() {
 
-   }
+    }
 
     public void setGrabberMiddle() {
 
@@ -399,7 +410,7 @@ public class RobotBaseState implements AstroRobotBaseInterface {
     }
 
     public void setMjolnirDown(){
-        mjolnir.setPosition(0.9);
+        mjolnir.setPosition(1);
     }
 
     public void setMjolnirUp(){
@@ -409,11 +420,11 @@ public class RobotBaseState implements AstroRobotBaseInterface {
     public void hammerTime() throws InterruptedException {
         setMjolnirUp();
         System.out.println("Mjolnir Down");
-        Thread.sleep(1500);
+        Thread.sleep(5000);
         System.out.println("Mjolnir sleep done");
-        mjolnir.setPosition(0.9);
+        setMjolnirDown();
         System.out.println("Mjolnir Up");
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         System.out.println("Mjolnir last sleep done");
     }
 
@@ -528,6 +539,7 @@ public class RobotBaseState implements AstroRobotBaseInterface {
             motorRight.setPower(0);
             motorLeft.setPower(0);
         }
+        System.out.println("turn Complete");
         Thread.sleep(100);
     }
 
@@ -610,6 +622,7 @@ public class RobotBaseState implements AstroRobotBaseInterface {
         motorRight.setPower(0);
         motorLeft.setPower(0);
         callingOpMode.waitForNextHardwareCycle();
+        callingOpMode.sleep(500);
     }
 
     @Override

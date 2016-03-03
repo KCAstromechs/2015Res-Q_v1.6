@@ -10,6 +10,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public interface AstroRobotBaseInterface {
     void initializeVariables(HardwareMap hardwareMap);
 
+    void setColorRed();
+
+    void setColorBlue();
+
     void setDriveReverse();
 
     void setDriveForward();

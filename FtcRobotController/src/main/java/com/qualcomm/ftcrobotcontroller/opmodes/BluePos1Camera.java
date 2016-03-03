@@ -47,20 +47,20 @@ public class BluePos1Camera extends LinearOpMode {
     AstroRobotBaseInterface robotBase;
 
     //Drive Constants
-    private static final double klongDrive = 106.0;
+    private static final double klongDrive = 95;
     private static final double kClearWall = 5.5;
-    private static final double kSlowApproach = 23.0;
+    private static final double kSlowApproach = 31.0;
 
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        robotBase = new RobotBaseState(hardwareMap, this);
+        robotBase = new RobotBaseState(hardwareMap,this);
         robotBase.initializeServos();
         robotBase.calibrateGyro();
+        telemetry.addData("Gyro", "Calibrated");
         robotBase.cameraSetup();
-        telemetry.addData("Ready to run:", "Gyro is calibrated and camera is set up. You are ready to run. " +
-                "Make sure that the robot is centered on the tile furthest to the left on the blue side.");
+        telemetry.addData("Ready to run", "Gyro and Camera are Ready");
 
         waitForStart();
 
@@ -68,33 +68,40 @@ public class BluePos1Camera extends LinearOpMode {
 
         robotBase.driveStraight(kClearWall, 1, 0, 1.0f); //clears wall
         robotBase.turn(40, 1.0f); //turns 45 degrees
-        robotBase.driveStraight(klongDrive, 1, 50, 1.0f); // long drive down the field
+        robotBase.driveStraight(klongDrive, 1, 45, 1.0f); // long drive down the field
         robotBase.turn(80, 1.0f); // turns towards safety beacon
         sleep(500);
         robotBase.snapPic();
         while(!robotBase.get_cameraProcessDone()){
             sleep(10);
         }
-        robotBase.setPushDown();
-        if (robotBase.get_yBlueAvg() > robotBase.get_yRedAvg()) {
-            System.out.println("Blue Side: " + "Left");
-            System.out.println("Red Side: " + "Right");
-            System.out.println("==>   Blue | Red      avgBlueY:" + robotBase.get_yBlueAvg() + " avgRedY:" + robotBase.get_yRedAvg());
-            robotBase.driveStraight(kSlowApproach, 0.5, 84, 1.0f); //approaches safety beacon
-            robotBase.setDriveReverse();
-            sleep(1000);
-            robotBase.driveStraight(kSlowApproach - 2.5, 0.5, 84, 1.0f); //backs away from beacon
-            robotBase.setDriveForward();
-            robotBase.setPushUp();
-            robotBase.turn(90, 1);
-            robotBase.driveStraight(kSlowApproach, 0.5, 90, 1.0f); //approaches safety beacon
+        telemetry.addData("Red Pixel Total:", robotBase.get_RedTotal());
+        telemetry.addData("Blue Pixel Total:", robotBase.get_BlueTotal());
+        System.out.println("total red pixels: " + robotBase.get_RedTotal());
+        System.out.println("total Blue pixels: " + robotBase.get_BlueTotal());
+        if(robotBase.get_RedTotal()>20 && robotBase.get_BlueTotal()>robotBase.get_RedTotal()) {
+            robotBase.setPushDown();
+            if (robotBase.get_yBlueAvg() > robotBase.get_yRedAvg()) {
+                System.out.println("Blue Side: " + "Left");
+                System.out.println("Red Side: " + "Right");
+                System.out.println("==>   Blue | Red      avgBlueY:" + robotBase.get_yBlueAvg() + " avgRedY:" + robotBase.get_yRedAvg());
+                robotBase.driveStraight(kSlowApproach, 0.5, 86, 1.0f); //approaches safety beacon
+                robotBase.setDriveReverse();
+                sleep(1000);
+                robotBase.driveStraight(kSlowApproach - 2.5, 0.5, 86, 1.0f); //backs away from beacon
+                robotBase.setDriveForward();
+                robotBase.setPushUp();
+                robotBase.turn(90, 1);
+                robotBase.driveStraight(kSlowApproach, 0.5, 90, 1.0f); //approaches safety beacon
+            } else {
+                System.out.println("Blue Side: " + "Right");
+                System.out.println("Red Side: " + "Left");
+                System.out.println("==>   Red | Blue      avgBlueY:" + robotBase.get_yBlueAvg() + " avgRedY:" + robotBase.get_yRedAvg());
+                robotBase.driveStraight(kSlowApproach - 2.5, 0.5, 94, 1.0f); //approaches safety beacon
+            }
+            robotBase.hammerTime();
         } else {
-            System.out.println("Blue Side: " + "Right");
-            System.out.println("Red Side: " + "Left");
-            System.out.println("==>   Red | Blue      avgBlueY:" + robotBase.get_yBlueAvg() + " avgRedY:" + robotBase.get_yRedAvg());
-            robotBase.driveStraight(kSlowApproach - 2.5, 0.5, 93, 1.0f); //approaches safety beacon
+            robotBase.driveStraight(kSlowApproach - 6, 0.5, 90, 1.0f); //approaches safety beacon
         }
-
-        robotBase.hammerTime();
     }
 }

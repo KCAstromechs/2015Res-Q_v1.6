@@ -98,7 +98,7 @@ public class RedPos1Wait extends LinearOpMode {
 
         robotBase.driveStraight(kClearWall,1,0,1.0f); //clears wall
         robotBase.turn(325,1.0f); //turns 45 degrees
-        robotBase.driveStraight(klongDrive,1,310,1.0f); // long drive down the field
+        robotBase.driveStraight(klongDrive,1,315,1.0f); // long drive down the field
         robotBase.turn(280,1.0f); // turns towards safety beacon
         robotBase.driveStraight(kSlowApproach,0.5,270,1.0f); //approaches safety beacon
         robotBase.hammerTime();
